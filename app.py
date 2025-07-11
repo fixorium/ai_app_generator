@@ -1,20 +1,19 @@
-import streamlit as st
-from models.text_generator import TextGenerator
+ from flask import Flask, request, jsonify
+from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
 
-def main():
-    st.title("AI App Generator")
-    st.write("Create your own AI-powered text generator app!")
+app = Flask(__name__)
 
-    # Get user input
-    prompt = st.text_input("Enter a prompt:", "")
+model_name = "t5-small"
+model = AutoModelForSeq2SeqLM.from_pretrained(model_name)
+tokenizer = AutoTokenizer.from_pretrained(model_name)
 
-    # Initialize the text generator model
-    model = TextGenerator()
+@app.route('/generate', methods=['POST'])
+def generate_text():
+    prompt = request.json.get("prompt", "")
+    input_ids = tokenizer.encode(prompt, return_tensors="pt")
+    output = model.generate(input_ids, max_length=100)
+    generated_text = tokenizer.decode(output[0], skip_special_tokens=True)
+    return jsonify({"text": generated_text})
 
-    # Generate text based on the prompt
-    if st.button("Generate Text"):
-        generated_text = model.generate_text(prompt)
-        st.write(generated_text)
-
-if __name__ == "__main__":
-    main()
+if __name__ == '__main__':
+    app.run(debug=True)
