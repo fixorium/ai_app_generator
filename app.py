@@ -1,4 +1,4 @@
- from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
@@ -29,7 +29,7 @@ def index():
         form.addEventListener('submit', async (e) => {
           e.preventDefault();
           const prompt = document.getElementById('prompt').value;
-          const response = await fetch('/generate', {
+          const response = await fetch('/api/generate', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
@@ -44,13 +44,10 @@ def index():
     </html>
     """
 
-@app.route('/generate', methods=['POST'])
+@app.route('/api/generate', methods=['POST'])
 def generate_text():
     data = request.get_json()
     prompt = data['prompt']
     # Your AI model logic here
     generated_text = f"Generated text for {prompt}"
     return jsonify({'text': generated_text})
-
-if __name__ == '__main__':
-    app.run(debug=True)
