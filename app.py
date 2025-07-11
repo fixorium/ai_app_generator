@@ -1,19 +1,16 @@
- from flask import Flask, request, jsonify
-from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
+ from flask import Flask, request, jsonify, send_from_directory
 
 app = Flask(__name__)
 
-model_name = "t5-small"
-model = AutoModelForSeq2SeqLM.from_pretrained(model_name)
-tokenizer = AutoTokenizer.from_pretrained(model_name)
+# Serve static files
+@app.route('/')
+def index():
+    return send_from_directory('.', 'index.html')
 
 @app.route('/generate', methods=['POST'])
 def generate_text():
-    prompt = request.json.get("prompt", "")
-    input_ids = tokenizer.encode(prompt, return_tensors="pt")
-    output = model.generate(input_ids, max_length=100)
-    generated_text = tokenizer.decode(output[0], skip_special_tokens=True)
-    return jsonify({"text": generated_text})
+    # Your text generation code here
+    return jsonify({'text': 'Generated text'})
 
 if __name__ == '__main__':
     app.run(debug=True)
