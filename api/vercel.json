@@ -1,4 +1,4 @@
- {
+{
   "version": 2,
   "builds": [
     {
@@ -8,9 +8,8 @@
   ],
   "routes": [
     {
-      "src": "/api/generate",
-      "dest": "api/text_generator.handler"
+      "src": "/generate",
+      "dest": "app.py"
     }
   ]
- }
-
+}
