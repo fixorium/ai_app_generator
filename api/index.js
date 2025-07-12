@@ -1,6 +1,10 @@
-// api/index.js
-const http = require('http');
+import React from 'react';
+import ReactDOM from 'react-dom';
+import App from './App';
 
-module.exports = async function handler(req, res) {
-  res.status(200).send('Hello, World!');
-};
+ReactDOM.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+  document.getElementById('root')
+);
