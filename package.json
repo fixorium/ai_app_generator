@@ -1,0 +1,13 @@
+ {
+  "name": "ai-app-generator",
+  "version": "1.0.0",
+  "description": "A simple AI-powered application.",
+  "main": "src/backend/server.js",
+  "scripts": {
+    "start": "node src/backend/server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2"
+  }
+}
